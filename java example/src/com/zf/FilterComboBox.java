@@ -55,13 +55,13 @@ import javax.swing.text.PlainDocument;
  * @author zhanhfan
  *
  */
-public class AxxFilterComboBox extends JPanel
+public class FilterComboBox extends JPanel
 {
 
   private String             lastValidValue;
   // this is the data list for filtering
   private String[]           data;
-  //singleton pop window, when using it, it must be associated with the correct instance of AxxFilterComboBox.
+  //singleton pop window, when using it, it must be associated with the correct instance of FilterComboBox.
   private static PopupWindow pop;
   private JTextComponent     textField;
   private AbstractButton     button;
@@ -77,7 +77,7 @@ public class AxxFilterComboBox extends JPanel
     JFrame f = new JFrame("test");
     f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     JPanel pane = new JPanel();
-    pane.add(new AxxFilterComboBox(patternExamples, "999999999999"));
+    pane.add(new FilterComboBox(patternExamples, "999999999999"));
     pane.add(new JTextField("Another"));
     pane.add(new JButton("haha"));
     f.getContentPane().add(pane);
@@ -102,7 +102,7 @@ public class AxxFilterComboBox extends JPanel
    * @param data, the data list.
    * @param seleceted, this must matched with one of the data.
    */
-  public AxxFilterComboBox(String[] data, String seleceted)
+  public FilterComboBox(String[] data, String seleceted)
   {
     super(new GridBagLayout());
     GridBagConstraints gc = new GridBagConstraints(0, 0, 1, 1, 1.0, 1.0, GridBagConstraints.CENTER,
@@ -145,7 +145,7 @@ public class AxxFilterComboBox extends JPanel
 
   public void updateAllData(String[] data, String input)
   {
-    //update the datas in AxxFilterComboBox
+    //update the datas in FilterComboBox
     //when updating don't trigger event on text field.
     updating = true;
     this.data = data;
@@ -210,7 +210,7 @@ public class AxxFilterComboBox extends JPanel
 
   }
 
-  private static synchronized void prepareWindow(AxxFilterComboBox comboBox)
+  private static synchronized void prepareWindow(FilterComboBox comboBox)
   {
     if (pop == null)
     {
@@ -221,7 +221,7 @@ public class AxxFilterComboBox extends JPanel
       tempFather.setVisible(true);
       pop = new PopupWindow(tempFather);
     }
-    //associate popup window with the working AxxFilterComboBox.
+    //associate popup window with the working FilterComboBox.
     pop.linkTo(comboBox);
   }
 
@@ -233,8 +233,8 @@ public class AxxFilterComboBox extends JPanel
       @Override
       public void actionPerformed(ActionEvent e)
       {
-        //associate popup window with the working AxxFilterComboBox, lazily
-        prepareWindow(AxxFilterComboBox.this);
+        //associate popup window with the working FilterComboBox, lazily
+        prepareWindow(FilterComboBox.this);
         //when button is clicked, hide pop if it is visible
         if (pop.isVisible())
         {
@@ -259,8 +259,8 @@ public class AxxFilterComboBox extends JPanel
         {
           return;
         }
-        //associate popup window with the working AxxFilterComboBox, lazily
-        prepareWindow(AxxFilterComboBox.this);
+        //associate popup window with the working FilterComboBox, lazily
+        prepareWindow(FilterComboBox.this);
         if (!isUserSelection && !updating)
         {
           fireUpdate(e);
@@ -270,8 +270,8 @@ public class AxxFilterComboBox extends JPanel
       @Override
       public void insertUpdate(DocumentEvent e)
       {
-        //associate popup window with the working AxxFilterComboBox, lazily
-        prepareWindow(AxxFilterComboBox.this);
+        //associate popup window with the working FilterComboBox, lazily
+        prepareWindow(FilterComboBox.this);
         if (!isUserSelection && !updating)
         {
           fireUpdate(e);
@@ -294,7 +294,7 @@ public class AxxFilterComboBox extends JPanel
             while (it.hasNext())
             {
               InputListener il = (InputListener)it.next();
-              il.inputChanged(new InputEvent(AxxFilterComboBox.this));
+              il.inputChanged(new InputEvent(FilterComboBox.this));
             }
           }
         }
@@ -324,14 +324,14 @@ public class AxxFilterComboBox extends JPanel
 
   private static class PopupWindow extends JWindow
   {
-    private int               selIndex;
-    private JLabel[]          items;
-    private String[]          data;
-    private JScrollPane       scrollPane;
-    private JPanel            popupPanel;
-    private int               orig_width;
-    private int               orig_height;
-    private AxxFilterComboBox combo;
+    private int            selIndex;
+    private JLabel[]       items;
+    private String[]       data;
+    private JScrollPane    scrollPane;
+    private JPanel         popupPanel;
+    private int            orig_width;
+    private int            orig_height;
+    private FilterComboBox combo;
 
     PopupWindow(Frame father)
     {
@@ -568,7 +568,7 @@ public class AxxFilterComboBox extends JPanel
       selIndex = -1;
     }
 
-    private void linkTo(AxxFilterComboBox combo)
+    private void linkTo(FilterComboBox combo)
     {
 
       //if the instance is not the same, then pop content should be updated.
@@ -873,7 +873,7 @@ public class AxxFilterComboBox extends JPanel
 
     public String getInput()
     {
-      AxxFilterComboBox afc = (AxxFilterComboBox)source;
+      FilterComboBox afc = (FilterComboBox)source;
       return afc.getInput();
     }
 
